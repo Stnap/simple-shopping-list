@@ -10,20 +10,20 @@ const Header = ({ title }) => {
 };
 
 Header.defaultProps = {
-  title: "Shopping List",
+  title: "Tiempo de espera",
 };
 
 const styles = StyleSheet.create({
   header: {
     height: 50,
-    padding: 10,
+    padding: 7,
     backgroundColor: "darkslateblue",
     justifyContent: "center",
     alignItems: "center",
   },
   text: {
     color: "#fff",
-    fontSize: 24,
+    fontSize: 22,
     textAlign: "center",
   },
 });

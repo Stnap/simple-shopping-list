@@ -1,54 +1,30 @@
+/* Instalacion de dependencias
+yarn add react-native-countdown-circle-timer
+npm install react-native-svg
+*/
+
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, View, FlatList, Alert } from "react-native";
+import { Button, Text, StyleSheet, View, FlatList, Alert } from "react-native";
 import Header from "./components/Header";
-import ListItem from "./components/ListItem";
-import AddItem from "./components/AddItem";
+import Timer from "./components/Timer";
+import { useCountdown } from "react-native-countdown-circle-timer";
 
 const App = () => {
-  const [items, setItems] = useState([
-    { id: Math.random().toString(), text: "Milk" },
-    { id: Math.random().toString(), text: "Eggs" },
-    { id: Math.random().toString(), text: "Bread" },
-    { id: Math.random().toString(), text: "Butter" },
-    { id: Math.random().toString(), text: "Juice" },
-  ]);
-
-  const deleteItem = (id) => {
-    setItems((prevItems) => {
-      return prevItems.filter((item) => item.id != id);
-    });
-  };
-
-  const addItem = (text) => {
-    if (!text) {
-      Alert.alert("❗Enter item to add", " Item name cannot be empty.", [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        { text: "OK" },
-      ]);
-      return;
-    } else {
-      setItems((prevItems) => {
-        return [{ id: Math.random().toString(), text }, ...prevItems];
-      });
-    }
-  };
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const [key, setKey] = React.useState(0);
 
   return (
     <>
       <StatusBar style="auto" />
       <View style={styles.container}>
-        <Header title="🛒 Shopping List..." />
-        <AddItem addItem={addItem} />
-        <FlatList
-          data={items}
-          renderItem={({ item }) => (
-            <ListItem item={item} deleteItem={deleteItem} />
-          )}
+        <Header title="Tiempo de espera" />
+        <Timer isPlaying={isPlaying} key={key} />
+        <Button
+          title="Pausar / Reanudar"
+          onPress={() => setIsPlaying((prev) => !prev)}
         />
+        <Button title="Reiniciar" onPress={() => setKey((prev) => prev + 1)} />
       </View>
     </>
   );
@@ -57,8 +33,10 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 25,
+    paddingBottom: 100,
     backgroundColor: "lightyellow",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
